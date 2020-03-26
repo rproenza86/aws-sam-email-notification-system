@@ -5,8 +5,8 @@
         "build": "tsc",
         "invoke": "npm run build && npm run invoke:only",
         "invoke:only": "stackery local invoke -e test --aws-profile default --input-file \"../../events/sqsEvent.json\"",
-        "debug": "npm run build && stackery local invoke -e test --aws-profile default --input-file \"../../events/sqsEvent.json\"  --debug-port 5656",
-        "debug:only": "stackery local invoke -e test --aws-profile default --input-file \"../../events/sqsEvent.json\"  --debug-port 5656"
+        "debug": "stackery local invoke -e test --aws-profile default --build --input-file \"../../events/sqsEvent.json\"  --debug-port 5656",
+        "debug:only": "npm run build && stackery local invoke -e test --aws-profile default --input-file \"../../events/sqsEvent.json\"  --debug-port 5656"
     },
     "dependencies": {
         "uuid": "^3.1.0"

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const saveRecord_1 = require("./saveRecord");
+const sendEmail_1 = require("./sendEmail");
 exports.handler = async (event, context) => {
     const dbSavingOps = [];
     try {
@@ -9,6 +10,7 @@ exports.handler = async (event, context) => {
             dbSavingOps.push(savingResult);
         });
         await Promise.all(dbSavingOps);
+        await sendEmail_1.sendEmail({ msg: 'Hello sendEmails lambda function' }); // TODO: This call can be async
     }
     catch (error) {
         console.log(`Error writing to table ${process.env.TABLE_NAME}. Make sure this function is running in the same environment as the table.`);
