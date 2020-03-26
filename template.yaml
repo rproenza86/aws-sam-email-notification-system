@@ -1,0 +1,271 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  handleBounceEmail:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-handleBounceEmail
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: handleBounceEmail
+      CodeUri: src/handleBounceEmail
+      Handler: index.handler
+      Runtime: nodejs12.x
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref bouncedEmails
+      Events:
+        bounce:
+          Type: SNS
+          Properties:
+            Topic: !Ref bounce
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref bouncedEmails
+          TABLE_ARN: !GetAtt bouncedEmails.Arn
+    Metadata:
+      RuntimeOption: typescript
+  handleEmailComplaint:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-handleEmailComplaint
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: handleEmailComplaint
+      CodeUri: src/handleEmailComplaint
+      Handler: index.handler
+      Runtime: nodejs12.x
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref emailComplaints
+      Events:
+        complaint:
+          Type: SNS
+          Properties:
+            Topic: !Ref complaint
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref emailComplaints
+          TABLE_ARN: !GetAtt emailComplaints.Arn
+    Metadata:
+      RuntimeOption: typescript
+  bounce:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub ${AWS::StackName}-bounce
+  complaint:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub ${AWS::StackName}-complaint
+  bouncedEmails:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      TableName: !Sub ${AWS::StackName}-bouncedEmails
+  emailComplaints:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      TableName: !Sub ${AWS::StackName}-emailComplaints
+  processNotifications:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-processNotifications
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: processNotifications
+      CodeUri: src/processNotifications
+      Handler: index.handler
+      Runtime: nodejs12.x
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref notificationsMessages
+        - LambdaInvokePolicy:
+            FunctionName: !Ref sendEmails
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref notificationsMessages
+          TABLE_ARN: !GetAtt notificationsMessages.Arn
+          FUNCTION_NAME: !Ref sendEmails
+          FUNCTION_ARN: !GetAtt sendEmails.Arn
+      Events:
+        notificationsQueue:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt notificationsQueue.Arn
+            BatchSize: 1
+    Metadata:
+      RuntimeOption: typescript
+  notificationsMessages:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      TableName: !Sub ${AWS::StackName}-notificationsMessages
+  emails:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      TableName: !Sub ${AWS::StackName}-emails
+  sendEmails:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-sendEmails
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: sendEmails
+      CodeUri: src/sendEmails
+      Handler: index.handler
+      Runtime: nodejs12.x
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref emails
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref emails
+          TABLE_ARN: !GetAtt emails.Arn
+    Metadata:
+      RuntimeOption: typescript
+  authServiceApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub
+        - ${ResourceName} From Stack ${StackTagName} Environment ${EnvironmentTagName}
+        - ResourceName: authServiceApi
+      StageName: !Ref EnvironmentAPIGatewayStageName
+      DefinitionBody:
+        swagger: '2.0'
+        info: {}
+        paths:
+          /keys/triggerExpiration:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${handleExpiredKey.Arn}/invocations
+              responses: {}
+          /emailsAuth:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${authEmailNotification.Arn}/invocations
+              responses: {}
+      EndpointConfiguration: REGIONAL
+      TracingEnabled: true
+  handleExpiredKey:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-handleExpiredKey
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: handleExpiredKey
+      CodeUri: src/handleExpiredKey
+      Handler: index.handler
+      Runtime: nodejs12.x
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt notificationsQueue.QueueName
+      Environment:
+        Variables:
+          QUEUE_NAME: !GetAtt notificationsQueue.QueueName
+          QUEUE_ARN: !GetAtt notificationsQueue.Arn
+          QUEUE_URL: !Ref notificationsQueue
+      Events:
+        authServiceApiPOSTkeystriggerExpiration:
+          Type: Api
+          Properties:
+            Path: /keys/triggerExpiration
+            Method: POST
+            RestApiId: !Ref authServiceApi
+    Metadata:
+      RuntimeOption: typescript
+  notificationsQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub ${AWS::StackName}-notificationsQueue
+  authEmailNotification:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-authEmailNotification
+      Description: !Sub
+        - Stack ${StackTagName} Environment ${EnvironmentTagName} Function ${ResourceName}
+        - ResourceName: authEmailNotification
+      CodeUri: src/authEmailNotification
+      Handler: index.handler
+      Runtime: nodejs12.x
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+      Events:
+        authServiceApiGETemailsAuth:
+          Type: Api
+          Properties:
+            Path: /emailsAuth
+            Method: GET
+            RestApiId: !Ref authServiceApi
+    Metadata:
+      RuntimeOption: typescript
+Parameters:
+  StackTagName:
+    Type: String
+    Description: Stack Name (injected by Stackery at deployment time)
+  EnvironmentTagName:
+    Type: String
+    Description: Environment Name (injected by Stackery at deployment time)
+  EnvironmentAPIGatewayStageName:
+    Type: String
+    Description: Environment name used for API Gateway Stage names (injected by Stackery at deployment time)
