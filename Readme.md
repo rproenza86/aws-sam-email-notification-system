@@ -10,3 +10,8 @@ The stack is an orchestration of :
    3. SQS
    4. SNS
    5. DynamoDB
+
+
+## Solution Diagram
+
+![architecture](docs/images/architecture.png)
