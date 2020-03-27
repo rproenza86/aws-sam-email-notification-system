@@ -15,5 +15,19 @@
         "statusBarItem.hoverBackground": "#3399ff",
         "statusBar.foreground": "#e7e7e7"
     },
-    "peacock.color": "#007fff"
+    "peacock.color": "#007fff",
+    "files.exclude": {
+        ".aws-sam": true,
+        ".stackery": true,
+        "src/**/node_modules": true,
+        "src/**/*.js": true
+    },
+    "search.exclude": {
+        ".aws-sam": true,
+        ".stackery": true,
+        "src/**/node_modules": true,
+        "src/**/*.js": true
+    },
+    "editor.formatOnSave": true,
+    "workbench.iconTheme": "vscode-icons"
 }

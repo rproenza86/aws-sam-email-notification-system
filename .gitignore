@@ -2,9 +2,5 @@
 .aws-sam
 
 
-src/authEmailNotification/node_modules
-src/handleBounceEmail/node_modules
-src/handleEmailComplaint/node_modules
-src/handleExpiredKey/node_modules
-src/processNotifications/node_modules
-src/sendEmails/node_modules
+src/**/node_modules
+src/**/*.js
