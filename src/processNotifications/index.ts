@@ -12,7 +12,6 @@ export const handler = async (event: AWSLambda.SQSEvent, context: AWSLambda.Cont
         for (const record of event.Records) {
             let authResult;
             try {
-                debugger;
                 authResult = await getNotificationAuth();
             } catch (error) {
                 console.log(error);

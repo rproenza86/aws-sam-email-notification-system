@@ -1,28 +1,41 @@
-import { DynamoDB, AWSError } from 'aws-sdk';
+// external dependencies
+import { DynamoDB, SES, AWSError } from 'aws-sdk';
 import * as uuid from 'uuid';
 // internal dependencies
 import { IEmailInfo } from '../processNotifications/types';
+import { sendEmail } from './emailSender';
+import { PromiseResult } from 'aws-sdk/lib/request';
 
 export const handler = async (emailInfo: IEmailInfo) => {
-    const dynamodb = new DynamoDB.DocumentClient();
-    const tableName = process.env.TABLE_NAME;
+    let result: any = { success: true, why: 'Error sending email' };
 
-    const params = {
-        TableName: tableName,
-        Item: {
+    const emailSentResult: PromiseResult<SES.SendEmailResponse, AWSError> = await sendEmail(
+        emailInfo?.content?.message
+    );
+
+    if (emailSentResult.MessageId) {
+        const dynamodb = new DynamoDB.DocumentClient();
+        const tableName = process.env.TABLE_NAME;
+        const newItem = {
             id: uuid.v1(),
             emailMessage: emailInfo?.content?.message,
-            sendTo: emailInfo?.content?.message_id
-        },
-        ConditionExpression: 'attribute_not_exists(id)',
-        ReturnConsumedCapacity: 'TOTAL'
-    };
-    console.log(`Processing email for :`, emailInfo);
+            sendTo: emailInfo?.content?.message_id,
+            sentTraceData: emailSentResult
+        };
 
-    const dbSavingResult = await dynamodb.put(params).promise();
-    const result = { dbSavingResult, emailInfo };
+        const params = {
+            TableName: tableName,
+            Item: newItem,
+            ConditionExpression: 'attribute_not_exists(id)',
+            ReturnConsumedCapacity: 'TOTAL'
+        };
+        console.log(`Processing email for :`, emailInfo);
 
-    console.log('Item added to table: ' + tableName);
+        const dbSavingResult = await dynamodb.put(params).promise();
+        console.log('Item added with email sent data to table: ' + tableName);
+
+        result = { success: true, dbSavingResult, newItem };
+    }
 
     return result;
 };
