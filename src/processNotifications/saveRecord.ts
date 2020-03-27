@@ -1,4 +1,3 @@
-// import * as AWS from 'aws-sdk';
 import { SQSRecord } from 'aws-lambda';
 import { DynamoDB, AWSError } from 'aws-sdk';
 import { PromiseResult } from 'aws-sdk/lib/request';
@@ -7,10 +6,11 @@ import { createDbRecord } from './utils';
 
 export const saveToDB = async (sqsRecord: SQSRecord) => {
     const dynamodb = new DynamoDB.DocumentClient();
+    const newDbRecord = createDbRecord(sqsRecord);
 
     const sqsMessage = {
         TableName: process.env.TABLE_NAME, // get the table name from the automatically populated environment variables
-        Item: createDbRecord(sqsRecord),
+        Item: newDbRecord,
         ConditionExpression: 'attribute_not_exists(id)', // do not overwrite existing entries
         ReturnConsumedCapacity: 'TOTAL'
     };
@@ -21,7 +21,7 @@ export const saveToDB = async (sqsRecord: SQSRecord) => {
         .then((result: PromiseResult<DynamoDB.DocumentClient.PutItemOutput, AWSError>) => {
             console.log(`Writing item ${sqsMessage.Item.id} to table ${process.env.TABLE_NAME}.`);
 
-            return result;
+            return { result, savedRecord: newDbRecord };
         })
         .catch(error => {
             console.log(
