@@ -116,14 +116,13 @@ Resources:
           TABLE_ARN: !GetAtt notificationsMessages.Arn
           FUNCTION_NAME: !Ref sendEmails
           FUNCTION_ARN: !GetAtt sendEmails.Arn
+          API_URL: !Sub https://${authServiceApi}.execute-api.${AWS::Region}.amazonaws.com/${authServiceApi.Stage}/emailsAuth
       Events:
         notificationsQueue:
           Type: SQS
           Properties:
             Queue: !GetAtt notificationsQueue.Arn
             BatchSize: 1
-    Metadata:
-      RuntimeOption: typescript
   notificationsMessages:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -200,6 +199,9 @@ Resources:
               responses: {}
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
+      Cors:
+        AllowHeaders: '''Authorization,Content-Type'''
+        AllowOrigin: '''*'''
   handleExpiredKey:
     Type: AWS::Serverless::Function
     Properties:
