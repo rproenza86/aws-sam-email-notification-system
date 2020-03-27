@@ -1,9 +1,10 @@
 import { Lambda } from 'aws-sdk';
+import { IMessageRecord } from './types';
 /**
  *
  * This will invoke the lambda function sendEmails
  */
-export const sendEmail = async message => {
+export const sendEmail = async (message: IMessageRecord) => {
     const lambda = new Lambda();
     const functionName = process.env.FUNCTION_NAME;
 

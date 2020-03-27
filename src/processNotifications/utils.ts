@@ -1,6 +1,6 @@
 import * as uuid from 'uuid';
-
 import { SQSRecord } from 'aws-lambda';
+
 import { IMessageRecord, Status } from './types';
 
 /**
