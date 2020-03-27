@@ -1,6 +1,7 @@
 // internal dependencies
 import { saveToDB } from './saveRecord';
 import { sendEmail } from './sendEmail';
+import { getNotificationAuth } from './getNotificationAuth';
 // types
 import { DbSavingOps, IDbSavingOps } from './types';
 
@@ -8,10 +9,20 @@ export const handler = async (event: AWSLambda.SQSEvent, context: AWSLambda.Cont
     const dbSavingOps: DbSavingOps[] = [];
 
     try {
-        event.Records.forEach(record => {
-            const savingResult = saveToDB(record);
-            dbSavingOps.push(savingResult);
-        });
+        for (const record of event.Records) {
+            let authResult;
+            try {
+                debugger;
+                authResult = await getNotificationAuth();
+            } catch (error) {
+                console.log(error);
+            }
+            if (authResult?.message === 'Email notifications authorized') {
+                const savingResult = saveToDB(record);
+                dbSavingOps.push(savingResult);
+            }
+        }
+
         const dbSavingResults = await Promise.all(dbSavingOps);
 
         dbSavingResults.forEach((result: IDbSavingOps) => {
