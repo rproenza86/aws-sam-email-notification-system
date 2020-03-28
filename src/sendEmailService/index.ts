@@ -2,7 +2,7 @@
 import { DynamoDB, SES, AWSError } from 'aws-sdk';
 import * as uuid from 'uuid';
 // internal dependencies
-import { IEmailInfo } from '../processNotifications/types';
+import { IEmailInfo } from '../notificationsService/types';
 import { sendEmail } from './emailSender';
 import { PromiseResult } from 'aws-sdk/lib/request';
 

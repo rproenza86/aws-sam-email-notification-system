@@ -1,2 +1,2 @@
-function-id: handleBounceEmail
+function-id: sendEmailService
 template-path: ../../template.yaml

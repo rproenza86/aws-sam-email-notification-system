@@ -2,7 +2,7 @@ import { Lambda } from 'aws-sdk';
 import { IMessageRecord } from './types';
 /**
  *
- * This will invoke the lambda function sendEmails
+ * This will invoke the lambda function sendEmailService
  */
 export const sendEmail = async (message: IMessageRecord) => {
     const lambda = new Lambda();
