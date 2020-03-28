@@ -24,11 +24,12 @@ export const handler = async (event: AWSLambda.SQSEvent, context: AWSLambda.Cont
 
         const dbSavingResults = await Promise.all(dbSavingOps);
 
-        dbSavingResults.forEach((result: IDbSavingOps) => {
-            if (result?.savedRecord?.id) {
-                sendEmail(result.savedRecord);
+        for (const result of dbSavingResults) {
+            if (result && result?.savedRecord?.id) {
+                const sendEmailResult = await sendEmail(result.savedRecord);
+                console.log('sendEmailResult :', sendEmailResult);
             }
-        });
+        }
     } catch (error) {
         console.log(
             `Error writing to table ${process.env.TABLE_NAME}. Make sure this function is running in the same environment as the table.`
