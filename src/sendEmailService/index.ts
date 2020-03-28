@@ -1,6 +1,5 @@
 // external dependencies
 import { DynamoDB, SES, AWSError } from 'aws-sdk';
-import * as uuid from 'uuid';
 // internal dependencies
 import { IEmailInfo } from '../notificationsService/types';
 import { sendEmail } from './emailSender';
@@ -16,8 +15,9 @@ export const handler = async (emailInfo: IEmailInfo) => {
     if (emailSentResult.MessageId) {
         const dynamodb = new DynamoDB.DocumentClient();
         const tableName = process.env.TABLE_NAME;
+
         const newItem = {
-            id: uuid.v1(),
+            id: emailSentResult.MessageId,
             emailMessage: emailInfo?.content?.message,
             sendTo: emailInfo?.content?.message_id,
             sentTraceData: emailSentResult

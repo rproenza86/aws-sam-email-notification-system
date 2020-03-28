@@ -6,9 +6,6 @@
         "invoke": "npm run build && npm run invoke:only",
         "invoke:only": "stackery local invoke -e test --aws-profile default"
     },
-    "dependencies": {
-        "uuid": "^3.1.0"
-    },
     "devDependencies": {
         "aws-sdk": "~2",
         "@types/aws-sdk": "^2.7.0",
