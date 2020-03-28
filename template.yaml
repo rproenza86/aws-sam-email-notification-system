@@ -17,7 +17,7 @@ Resources:
       Policies:
         - AWSXrayWriteOnlyAccess
         - DynamoDBCrudPolicy:
-            TableName: !Ref bouncedEmails
+            TableName: !Ref emails
       Events:
         bounce:
           Type: SNS
@@ -25,8 +25,8 @@ Resources:
             Topic: !Ref bounce
       Environment:
         Variables:
-          TABLE_NAME: !Ref bouncedEmails
-          TABLE_ARN: !GetAtt bouncedEmails.Arn
+          TABLE_NAME: !Ref emails
+          TABLE_ARN: !GetAtt emails.Arn
     Metadata:
       RuntimeOption: typescript
   handleEmailComplaint:
@@ -45,7 +45,7 @@ Resources:
       Policies:
         - AWSXrayWriteOnlyAccess
         - DynamoDBCrudPolicy:
-            TableName: !Ref emailComplaints
+            TableName: !Ref emails
       Events:
         complaint:
           Type: SNS
@@ -53,8 +53,8 @@ Resources:
             Topic: !Ref complaint
       Environment:
         Variables:
-          TABLE_NAME: !Ref emailComplaints
-          TABLE_ARN: !GetAtt emailComplaints.Arn
+          TABLE_NAME: !Ref emails
+          TABLE_ARN: !GetAtt emails.Arn
     Metadata:
       RuntimeOption: typescript
   bounce:
@@ -65,32 +65,6 @@ Resources:
     Type: AWS::SNS::Topic
     Properties:
       TopicName: !Sub ${AWS::StackName}-complaint
-  bouncedEmails:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      AttributeDefinitions:
-        - AttributeName: id
-          AttributeType: S
-      BillingMode: PAY_PER_REQUEST
-      KeySchema:
-        - AttributeName: id
-          KeyType: HASH
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES
-      TableName: !Sub ${AWS::StackName}-bouncedEmails
-  emailComplaints:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      AttributeDefinitions:
-        - AttributeName: id
-          AttributeType: S
-      BillingMode: PAY_PER_REQUEST
-      KeySchema:
-        - AttributeName: id
-          KeyType: HASH
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES
-      TableName: !Sub ${AWS::StackName}-emailComplaints
   processNotifications:
     Type: AWS::Serverless::Function
     Properties:
