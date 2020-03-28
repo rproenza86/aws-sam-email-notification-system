@@ -1,13 +1,15 @@
 {
-  "name": "handlebounceemail",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "tsc"
-  },
-  "devDependencies": {
-    "aws-sdk": "~2",
-    "@types/aws-sdk": "^2.7.0",
-    "@types/node": "^12.6.8",
-    "typescript": "^3.5.3"
-  }
+    "name": "handlebounceemail",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "tsc",
+        "invoke": "npm run build && stackery local invoke -e test --aws-profile default --input-file \"../../events/snsEmailBounceEvent.json\""
+    },
+    "devDependencies": {
+        "@types/aws-sdk": "^2.7.0",
+        "@types/node": "^12.6.8",
+        "@types/aws-lambda": "8.10.46",
+        "aws-sdk": "~2",
+        "typescript": "^3.5.3"
+    }
 }
