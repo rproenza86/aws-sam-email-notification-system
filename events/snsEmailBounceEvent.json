@@ -1,0 +1,71 @@
+{
+    "Records": [
+        {
+            "EventSource": "aws:sns",
+            "EventVersion": "1.0",
+            "EventSubscriptionArn": "arn:aws:sns:us-west-2:883394708467:local-demo-test-bounce:39c8b709-31ad-4a37-ba3a-0d91a475df6c",
+            "Sns": {
+                "Type": "Notification",
+                "MessageId": "86c374a9-b110-5a59-9eb1-22502fd9790f",
+                "TopicArn": "arn:aws:sns:us-west-2:883394708467:local-demo-test-bounce",
+                "Subject": null,
+                "Message": {
+                    "notificationType": "Bounce",
+                    "bounce": {
+                        "bounceType": "Permanent",
+                        "bounceSubType": "General",
+                        "bouncedRecipients": [
+                            {
+                                "emailAddress": "bounce@simulator.amazonses.com",
+                                "action": "failed",
+                                "status": "5.1.1",
+                                "diagnosticCode": "smtp; 550 5.1.1 user unknown"
+                            }
+                        ],
+                        "timestamp": "2020-03-28T18:50:49.942Z",
+                        "feedbackId": "01010171227b7aa5-ce0d0337-440c-4c51-9da6-81411c68a04a-000000",
+                        "remoteMtaIp": "34.231.82.204",
+                        "reportingMTA": "dsn; a27-55.smtp-out.us-west-2.amazonses.com"
+                    },
+                    "mail": {
+                        "timestamp": "2020-03-28T18:50:48.000Z",
+                        "source": "Codex Man <codex@raulproenza.page>",
+                        "sourceArn": "arn:aws:ses:us-west-2:883394708467:identity/raulproenza.page",
+                        "sourceIp": "38.127.201.3",
+                        "sendingAccountId": "883394708467",
+                        "messageId": "01010171227b75b5-704bf052-692e-4d78-b1dd-f6ea74844131-000000",
+                        "destination": ["bounce@simulator.amazonses.com"],
+                        "headersTruncated": false,
+                        "headers": [
+                            {
+                                "name": "From",
+                                "value": "Codex Man <codex@raulproenza.page>"
+                            },
+                            { "name": "To", "value": "bounce@simulator.amazonses.com" },
+                            {
+                                "name": "Subject",
+                                "value": "Amazon SES Test (AWS SDK for JavaScript in Node.js)"
+                            },
+                            { "name": "MIME-Version", "value": "1.0" },
+                            {
+                                "name": "Content-Type",
+                                "value": "multipart/alternative;  boundary=\"----=_Part_1343277_1641552222.1585421448631\""
+                            }
+                        ],
+                        "commonHeaders": {
+                            "from": ["Codex Man <codex@raulproenza.page>"],
+                            "to": ["bounce@simulator.amazonses.com"],
+                            "subject": "Amazon SES Test (AWS SDK for JavaScript in Node.js)"
+                        }
+                    }
+                },
+                "Timestamp": "2020-03-28T18:50:49.954Z",
+                "SignatureVersion": "1",
+                "Signature": "jeVPfRTDeHoKfFANcpBo3Olufue+KFOgOYyN32hu232q0Sz6jAvi1r5QvYEsWPqlUc8ijTeXz58WXVik/pQ7N6Lg3fnr5tkPKmayl60osKjDsrEnXqd0puNXS0EWoyA/g7BFJsL3lOaeTqoTdcnXI3NyafAQcr0cWGNWP+9z0XeIeED+TeNZltbT7kOjsDYMBAATw7hJ0rrJrHKoPr6qadXG8MWX1gbvrEq+bXS8HU8t4eNzkJKSeTkyvlWHYHN9IkRhD9rZZ2ABA23Uf8FJjd3EFtgktFbLqKdGrVHftA2scQNo35Q588ASjPyxmjFLoPJJ6dOsINui+xe4A24icQ==",
+                "SigningCertUrl": "https://sns.us-west-2.amazonaws.com/SimpleNotificationService-a86cb10b4e1f29c941702d737128f7b6.pem",
+                "UnsubscribeUrl": "https://sns.us-west-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-west-2:883394708467:local-demo-test-bounce:39c8b709-31ad-4a37-ba3a-0d91a475df6c",
+                "MessageAttributes": {}
+            }
+        }
+    ]
+}
