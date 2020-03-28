@@ -20,13 +20,15 @@
         ".aws-sam": true,
         ".stackery": true,
         "src/**/node_modules": true,
-        "src/**/*.js": true
+        "src/**/*.js": true,
+        "src/**/*.map": true
     },
     "search.exclude": {
         ".aws-sam": true,
         ".stackery": true,
         "src/**/node_modules": true,
-        "src/**/*.js": true
+        "src/**/*.js": true,
+        "src/**/*.map": true
     },
     "editor.formatOnSave": true,
     "workbench.iconTheme": "vscode-icons"

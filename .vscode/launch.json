@@ -7,7 +7,7 @@
         {
             "type": "node",
             "request": "attach",
-            "name": "Attach",
+            "name": "Attach to processNotifications",
             "port": 5656,
             "cwd": "${workspaceRoot}/src/processNotifications",
             "sourceMaps": true,
@@ -16,20 +16,21 @@
             "remoteRoot": "/var/task",
             "protocol": "inspector",
             "stopOnEntry": false,
-            "outFiles": [
-                "${workspaceRoot}/src/processNotifications/index.js",
-                "${workspaceRoot}/src/processNotifications/saveRecords.js"
-            ]
+            "outFiles": ["${workspaceRoot}/**/*.js"]
         },
         {
             "type": "node",
-            "request": "launch",
-            "name": "Launch Program",
-            "cwd": "${workspaceRoot}/src/processNotifications",
-            "runtimeArgs": ["-r", "ts-node/register"],
-            "args": ["${workspaceRoot}/src/processNotifications/index.ts"],
+            "request": "attach",
+            "name": "Attach to sendEmails",
+            "port": 5656,
+            "cwd": "${workspaceRoot}/src/sendEmails",
             "sourceMaps": true,
-            "smartStep": true
+            "smartStep": true,
+            "localRoot": "${workspaceRoot}/src/sendEmails",
+            "remoteRoot": "/var/task",
+            "protocol": "inspector",
+            "stopOnEntry": false,
+            "outFiles": ["${workspaceRoot}/**/*.js"]
         }
     ]
 }

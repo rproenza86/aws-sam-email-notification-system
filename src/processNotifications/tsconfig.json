@@ -1,13 +1,9 @@
 {
-  "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs"
-  },
-  "exclude": [
-    "node_modules"
-  ],
-  "types": [
-    "node",
-    "aws-sdk"
-  ]
+    "compilerOptions": {
+        "target": "es2017",
+        "module": "commonjs",
+        "sourceMap": true
+    },
+    "exclude": ["node_modules"],
+    "types": ["node", "aws-sdk"]
 }
