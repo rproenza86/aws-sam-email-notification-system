@@ -19,8 +19,14 @@ export interface IDbSavingOps {
 
 export type DbSavingOps = Promise<void | IDbSavingOps>;
 
+export interface IToggles {
+    simulateBounceToggle: boolean;
+    simulateComplaintToggle: boolean;
+}
+
 export interface IEmailInfo {
     source: string;
+    toggles: IToggles;
     content: IMessageRecord;
 }
 

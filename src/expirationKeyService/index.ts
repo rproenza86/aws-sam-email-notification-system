@@ -1,15 +1,18 @@
 import * as AWS from 'aws-sdk';
 
-export const handler = async (
-    event: AWSLambda.APIGatewayEvent,
-    context: AWSLambda.APIGatewayEventRequestContext
-) => {
+import { IExpirationKeyServicePayload } from './types';
+
+export const handler = async (event: AWSLambda.APIGatewayEvent) => {
     let response;
 
     try {
         const sqs = new AWS.SQS();
 
-        console.log(event);
+        const payload: IExpirationKeyServicePayload = JSON.parse(event.body);
+        console.log('payload', payload);
+
+        const toggles: any = { ...payload };
+        delete toggles.message;
 
         const params = {
             DelaySeconds: 10,
@@ -25,12 +28,15 @@ export const handler = async (
                 WeeksOn: {
                     DataType: 'Number',
                     StringValue: '6'
+                },
+                Toggles: {
+                    DataType: 'String',
+                    StringValue: JSON.stringify(toggles)
                 }
             },
             MessageBody:
+                payload?.message ||
                 'Information about current NY Times fiction bestseller for week of 12/11/2016.',
-            // MessageDeduplicationId: 'TheWhistler', // Required for FIFO queues
-            // MessageId: 'Group1', // Required for FIFO queues
             QueueUrl: process.env.QUEUE_URL
         };
 

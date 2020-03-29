@@ -1,15 +1,16 @@
 // external dependencies
 import { DynamoDB, SES, AWSError } from 'aws-sdk';
+import { PromiseResult } from 'aws-sdk/lib/request';
 // internal dependencies
 import { IEmailInfo } from '../notificationsService/types';
 import { sendEmail } from './emailSender';
-import { PromiseResult } from 'aws-sdk/lib/request';
 
 export const handler = async (emailInfo: IEmailInfo) => {
     let result: any = { success: true, why: 'Error sending email' };
 
     const emailSentResult: PromiseResult<SES.SendEmailResponse, AWSError> = await sendEmail(
-        emailInfo?.content?.message
+        emailInfo?.content?.message,
+        emailInfo.toggles
     );
 
     if (emailSentResult.MessageId) {

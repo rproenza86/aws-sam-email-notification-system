@@ -4,10 +4,12 @@ import { sendEmail } from './sendEmail';
 import { getNotificationAuth } from './getNotificationAuth';
 import { isNewNotification } from './findRecord';
 // types
-import { DbSavingOps } from './types';
+import { DbSavingOps, IToggles } from './types';
 
-export const handler = async (event: AWSLambda.SQSEvent, context: AWSLambda.Context) => {
+export const handler = async (event: AWSLambda.SQSEvent) => {
     const dbSavingOps: DbSavingOps[] = [];
+
+    console.log('sqsEvent: ', JSON.stringify(event));
 
     try {
         for (const record of event.Records) {
@@ -26,9 +28,14 @@ export const handler = async (event: AWSLambda.SQSEvent, context: AWSLambda.Cont
 
         const dbSavingResults = await Promise.all(dbSavingOps);
 
-        for (const result of dbSavingResults) {
+        for (const resultIndex in dbSavingResults) {
+            const result = dbSavingResults[resultIndex];
+            const notificationToggles: IToggles = JSON.parse(
+                event.Records[resultIndex].messageAttributes?.Toggles?.stringValue || '{}'
+            );
+
             if (result && result?.savedRecord?.id) {
-                const sendEmailResult = await sendEmail(result.savedRecord);
+                const sendEmailResult = await sendEmail(result.savedRecord, notificationToggles);
                 console.log('sendEmailResult :', sendEmailResult);
             }
         }

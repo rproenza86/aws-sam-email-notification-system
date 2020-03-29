@@ -1,19 +1,19 @@
 import { Lambda } from 'aws-sdk';
-import { IMessageRecord } from './types';
+import { IMessageRecord, IToggles } from './types';
 /**
  *
  * This will invoke the lambda function sendEmailService
  */
-export const sendEmail = async (message: IMessageRecord) => {
+export const sendEmail = async (message: IMessageRecord, toggles: IToggles) => {
     const lambda = new Lambda();
     const functionName = process.env.FUNCTION_NAME;
 
     const payload = {
         source: 'invokeFunction',
-        content: message
+        content: message,
+        toggles
     };
 
-    // Construct parameters for the invoke call
     const params = {
         FunctionName: functionName,
         Payload: JSON.stringify(payload)

@@ -1,0 +1,8 @@
+POST https://kgdg3a4p0m.execute-api.us-west-2.amazonaws.com/test/keys/triggerExpiration
+Content-Type: application/json
+
+{
+    "message": "This message will trigger an email bounce event!",
+    "simulateBounceToggle": true,
+    "simulateComplaintToggle": false
+}

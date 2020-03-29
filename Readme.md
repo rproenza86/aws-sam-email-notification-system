@@ -26,3 +26,11 @@ The stack is an orchestration of :
 
 ### SAM Template Architecture Diagram
 ![architecture](docs/images/architecture.png)
+
+
+## Deployment notes
+
+On each new stack creation a new IAM role corresponding to the `sendEmailService` will be created. The email send request done by that service will not work is the role does not have
+added the "AmazonSESFullAccess" policy.
+
+Solution find the corresponding role(Ex. `local-demo-test-sendEmailServiceRole-232DDS@32w`) and add the SES policy.
