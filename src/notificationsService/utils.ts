@@ -1,4 +1,3 @@
-import * as uuid from 'uuid';
 import { SQSRecord } from 'aws-lambda';
 
 import { IMessageRecord, Status } from './types';
@@ -19,8 +18,7 @@ export const createDbRecord = (fromEventRecord: SQSRecord) => {
     } = fromEventRecord;
 
     const messageDbRecord: IMessageRecord = {
-        id: uuid.v1(),
-        message_id: messageId,
+        id: messageId,
         message: body,
         timestamp: SentTimestamp,
         status: Status.Saved

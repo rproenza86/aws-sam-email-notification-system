@@ -2,23 +2,25 @@
 import { saveToDB } from './saveRecord';
 import { sendEmail } from './sendEmail';
 import { getNotificationAuth } from './getNotificationAuth';
+import { isNewNotification } from './findRecord';
 // types
-import { DbSavingOps, IDbSavingOps } from './types';
+import { DbSavingOps } from './types';
 
 export const handler = async (event: AWSLambda.SQSEvent, context: AWSLambda.Context) => {
     const dbSavingOps: DbSavingOps[] = [];
 
     try {
         for (const record of event.Records) {
-            let authResult;
-            try {
-                authResult = await getNotificationAuth();
-            } catch (error) {
-                console.log(error);
-            }
-            if (authResult?.message === 'Email notifications authorized') {
-                const savingResult = saveToDB(record);
-                dbSavingOps.push(savingResult);
+            const shouldProcessNotification = await isNewNotification(record.messageId);
+            console.log('isNewNotification ', shouldProcessNotification);
+
+            if (shouldProcessNotification) {
+                const isEmailAuthorized = await getNotificationAuth();
+
+                if (isEmailAuthorized?.message === 'Email notifications authorized') {
+                    const savingResult = saveToDB(record);
+                    dbSavingOps.push(savingResult);
+                }
             }
         }
 

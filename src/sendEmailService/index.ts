@@ -19,7 +19,7 @@ export const handler = async (emailInfo: IEmailInfo) => {
         const newItem = {
             id: emailSentResult.MessageId,
             emailMessage: emailInfo?.content?.message,
-            sendTo: emailInfo?.content?.message_id,
+            sendTo: emailInfo?.content?.id,
             sentTraceData: emailSentResult
         };
 
