@@ -3,67 +3,18 @@
         {
             "EventSource": "aws:sns",
             "EventVersion": "1.0",
-            "EventSubscriptionArn": "arn:aws:sns:us-west-2:883394708467:local-demo-test-bounce:39c8b709-31ad-4a37-ba3a-0d91a475df6c",
+            "EventSubscriptionArn": "arn:aws:sns:us-west-2:883394708467:local-demo-test-bounce:055a3d7a-69a7-4042-bdaa-4b2d76f8950a",
             "Sns": {
                 "Type": "Notification",
-                "MessageId": "86c374a9-b110-5a59-9eb1-22502fd9790f",
+                "MessageId": "42bb0fca-5f8b-547c-a8ba-5930cf436211",
                 "TopicArn": "arn:aws:sns:us-west-2:883394708467:local-demo-test-bounce",
                 "Subject": null,
-                "Message": {
-                    "notificationType": "Bounce",
-                    "bounce": {
-                        "bounceType": "Permanent",
-                        "bounceSubType": "General",
-                        "bouncedRecipients": [
-                            {
-                                "emailAddress": "bounce@simulator.amazonses.com",
-                                "action": "failed",
-                                "status": "5.1.1",
-                                "diagnosticCode": "smtp; 550 5.1.1 user unknown"
-                            }
-                        ],
-                        "timestamp": "2020-03-28T18:50:49.942Z",
-                        "feedbackId": "01010171227b7aa5-ce0d0337-440c-4c51-9da6-81411c68a04a-000000",
-                        "remoteMtaIp": "34.231.82.204",
-                        "reportingMTA": "dsn; a27-55.smtp-out.us-west-2.amazonses.com"
-                    },
-                    "mail": {
-                        "timestamp": "2020-03-28T18:50:48.000Z",
-                        "source": "Codex Man <codex@raulproenza.page>",
-                        "sourceArn": "arn:aws:ses:us-west-2:883394708467:identity/raulproenza.page",
-                        "sourceIp": "38.127.201.3",
-                        "sendingAccountId": "883394708467",
-                        "messageId": "01010171234214eb-436bb393-733f-444e-8bf9-04b8098034ea-000000",
-                        "destination": ["bounce@simulator.amazonses.com"],
-                        "headersTruncated": false,
-                        "headers": [
-                            {
-                                "name": "From",
-                                "value": "Codex Man <codex@raulproenza.page>"
-                            },
-                            { "name": "To", "value": "bounce@simulator.amazonses.com" },
-                            {
-                                "name": "Subject",
-                                "value": "Amazon SES Test (AWS SDK for JavaScript in Node.js)"
-                            },
-                            { "name": "MIME-Version", "value": "1.0" },
-                            {
-                                "name": "Content-Type",
-                                "value": "multipart/alternative;  boundary=\"----=_Part_1343277_1641552222.1585421448631\""
-                            }
-                        ],
-                        "commonHeaders": {
-                            "from": ["Codex Man <codex@raulproenza.page>"],
-                            "to": ["bounce@simulator.amazonses.com"],
-                            "subject": "Amazon SES Test (AWS SDK for JavaScript in Node.js)"
-                        }
-                    }
-                },
-                "Timestamp": "2020-03-28T18:50:49.954Z",
+                "Message": "{\"notificationType\":\"Bounce\",\"bounce\":{\"bounceType\":\"Permanent\",\"bounceSubType\":\"General\",\"bouncedRecipients\":[{\"emailAddress\":\"bounce@simulator.amazonses.com\",\"action\":\"failed\",\"status\":\"5.1.1\",\"diagnosticCode\":\"smtp; 550 5.1.1 user unknown\"}],\"timestamp\":\"2020-03-29T12:03:20.018Z\",\"feedbackId\":\"01010171262cc31c-99bedc50-b5a8-4e98-8c7a-d852fd283384-000000\",\"remoteMtaIp\":\"18.205.136.165\",\"reportingMTA\":\"dsn; a27-56.smtp-out.us-west-2.amazonses.com\"},\"mail\":{\"timestamp\":\"2020-03-29T12:03:18.000Z\",\"source\":\"Codex Man <codex@raulproenza.page>\",\"sourceArn\":\"arn:aws:ses:us-west-2:883394708467:identity/raulproenza.page\",\"sourceIp\":\"38.127.201.3\",\"sendingAccountId\":\"883394708467\",\"messageId\":\"01010171262cbd77-328aedec-a5bd-4468-bdb1-4efe78034806-000000\",\"destination\":[\"bounce@simulator.amazonses.com\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"Codex Man <codex@raulproenza.page>\"},{\"name\":\"To\",\"value\":\"bounce@simulator.amazonses.com\"},{\"name\":\"Subject\",\"value\":\"Amazon SES Test (AWS SDK for JavaScript in Node.js)\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_2197241_788533090.1585483398520\\\"\"}],\"commonHeaders\":{\"from\":[\"Codex Man <codex@raulproenza.page>\"],\"to\":[\"bounce@simulator.amazonses.com\"],\"subject\":\"Amazon SES Test (AWS SDK for JavaScript in Node.js)\"}}}",
+                "Timestamp": "2020-03-29T12:03:20.043Z",
                 "SignatureVersion": "1",
-                "Signature": "jeVPfRTDeHoKfFANcpBo3Olufue+KFOgOYyN32hu232q0Sz6jAvi1r5QvYEsWPqlUc8ijTeXz58WXVik/pQ7N6Lg3fnr5tkPKmayl60osKjDsrEnXqd0puNXS0EWoyA/g7BFJsL3lOaeTqoTdcnXI3NyafAQcr0cWGNWP+9z0XeIeED+TeNZltbT7kOjsDYMBAATw7hJ0rrJrHKoPr6qadXG8MWX1gbvrEq+bXS8HU8t4eNzkJKSeTkyvlWHYHN9IkRhD9rZZ2ABA23Uf8FJjd3EFtgktFbLqKdGrVHftA2scQNo35Q588ASjPyxmjFLoPJJ6dOsINui+xe4A24icQ==",
+                "Signature": "gSvxKSDrsel06GfF2PGDD9ahiWOUCAL/piy4/M6m7NXsHQn9FiVpUtTdIyBSAeT9WuSfzV0M37n8ftKDopr+UBj/N4ZvF+P+eC4Ue7oYcoUII5BBXrLhJBwwF6ytzN6Rt7yy3kRkafE4Vytv29qBFdfd7arSp1HbuGbgbaQP5axNMtPAoxQhsjjQTV1Uw7gg+ovVVJ/AZ2EjCa1vofOkAw6PYUDu5u1N1egYGJ0DGmg7C8CXkpXrDnVng6Fdo3D6tEKHwsObWPyWZ6SQuyRDsN7hgXhn4QjCN4eL4Y/yn0CNZDIUIS2wkWx4tsd/AKPAR4yooUQY3VTh+H24h4SeUA==",
                 "SigningCertUrl": "https://sns.us-west-2.amazonaws.com/SimpleNotificationService-a86cb10b4e1f29c941702d737128f7b6.pem",
-                "UnsubscribeUrl": "https://sns.us-west-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-west-2:883394708467:local-demo-test-bounce:39c8b709-31ad-4a37-ba3a-0d91a475df6c",
+                "UnsubscribeUrl": "https://sns.us-west-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-west-2:883394708467:local-demo-test-bounce:055a3d7a-69a7-4042-bdaa-4b2d76f8950a",
                 "MessageAttributes": {}
             }
         }

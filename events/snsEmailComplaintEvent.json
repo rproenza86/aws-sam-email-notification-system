@@ -3,64 +3,18 @@
         {
             "EventSource": "aws:sns",
             "EventVersion": "1.0",
-            "EventSubscriptionArn": "arn:aws:sns:us-west-2:883394708467:local-demo-test-complaint:2a78546b-37d9-4709-b82b-ca87bdf42763",
+            "EventSubscriptionArn": "arn:aws:sns:us-west-2:883394708467:local-demo-test-complaint:822d95c2-1413-4d04-9a65-1b515c5fefc6",
             "Sns": {
                 "Type": "Notification",
-                "MessageId": "266c96ba-94d4-523d-a920-c0433454646c",
+                "MessageId": "fd051ce2-b8ab-5f91-8f3a-4a1823ceb7a3",
                 "TopicArn": "arn:aws:sns:us-west-2:883394708467:local-demo-test-complaint",
                 "Subject": null,
-                "Message": {
-                    "notificationType": "Complaint",
-                    "complaint": {
-                        "complaintSubType": null,
-                        "complainedRecipients": [
-                            { "emailAddress": "complaint@simulator.amazonses.com" }
-                        ],
-                        "timestamp": "2020-03-28T18:58:07.000Z",
-                        "feedbackId": "0101017122822d28-0702b9be-6874-4cbd-afe0-10a3117d1c2c-000000",
-                        "userAgent": "Amazon SES Mailbox Simulator",
-                        "complaintFeedbackType": "abuse"
-                    },
-                    "mail": {
-                        "timestamp": "2020-03-28T18:58:08.884Z",
-                        "source": "Codex Man <codex@raulproenza.page>",
-                        "sourceArn": "arn:aws:ses:us-west-2:883394708467:identity/raulproenza.page",
-                        "sourceIp": "38.127.201.3",
-                        "sendingAccountId": "883394708467",
-                        "messageId": "01010171228222c9-47189883-aa01-4525-8fb1-003313795c4d-000000",
-                        "destination": ["complaint@simulator.amazonses.com"],
-                        "headersTruncated": false,
-                        "headers": [
-                            {
-                                "name": "From",
-                                "value": "Codex Man <codex@raulproenza.page>"
-                            },
-                            {
-                                "name": "To",
-                                "value": "complaint@simulator.amazonses.com"
-                            },
-                            {
-                                "name": "Subject",
-                                "value": "Amazon SES Test (AWS SDK for JavaScript in Node.js)"
-                            },
-                            { "name": "MIME-Version", "value": "1.0" },
-                            {
-                                "name": "Content-Type",
-                                "value": "multipart/alternative;  boundary=\"----=_Part_1380220_1506483151.1585421886155\""
-                            }
-                        ],
-                        "commonHeaders": {
-                            "from": ["Codex Man <codex@raulproenza.page>"],
-                            "to": ["complaint@simulator.amazonses.com"],
-                            "subject": "Amazon SES Test (AWS SDK for JavaScript in Node.js)"
-                        }
-                    }
-                },
-                "Timestamp": "2020-03-28T18:58:08.907Z",
+                "Message": "{\"notificationType\":\"Complaint\",\"complaint\":{\"complaintSubType\":null,\"complainedRecipients\":[{\"emailAddress\":\"complaint@simulator.amazonses.com\"}],\"timestamp\":\"2020-03-29T12:48:36.000Z\",\"feedbackId\":\"0101017126563a94-c81b1633-f323-42e8-8aef-7af56715b0ad-000000\",\"userAgent\":\"Amazon SES Mailbox Simulator\",\"complaintFeedbackType\":\"abuse\"},\"mail\":{\"timestamp\":\"2020-03-29T12:48:37.587Z\",\"source\":\"Codex Man <codex@raulproenza.page>\",\"sourceArn\":\"arn:aws:ses:us-west-2:883394708467:identity/raulproenza.page\",\"sourceIp\":\"38.127.201.3\",\"sendingAccountId\":\"883394708467\",\"messageId\":\"01010171265630e0-1556348f-4df9-46bd-ada2-f720cc2993fa-000000\",\"destination\":[\"complaint@simulator.amazonses.com\"],\"headersTruncated\":false,\"headers\":[{\"name\":\"From\",\"value\":\"Codex Man <codex@raulproenza.page>\"},{\"name\":\"To\",\"value\":\"complaint@simulator.amazonses.com\"},{\"name\":\"Subject\",\"value\":\"Amazon SES Test (AWS SDK for JavaScript in Node.js)\"},{\"name\":\"MIME-Version\",\"value\":\"1.0\"},{\"name\":\"Content-Type\",\"value\":\"multipart/alternative;  boundary=\\\"----=_Part_2276035_36150708.1585486115041\\\"\"}],\"commonHeaders\":{\"from\":[\"Codex Man <codex@raulproenza.page>\"],\"to\":[\"complaint@simulator.amazonses.com\"],\"subject\":\"Amazon SES Test (AWS SDK for JavaScript in Node.js)\"}}}",
+                "Timestamp": "2020-03-29T12:48:37.608Z",
                 "SignatureVersion": "1",
-                "Signature": "jTbWOHvzZdfdz6jo3Hnt2eWlGOOtWk6j8z6X0UaPZ5WeHhg3mi/4RkNeCgknJljrAzSQ7jg7bpB2mh4c3Et5TWiS3PNveV1V8AxOEQ9kB8aTn2wkE5Me3gt3inA6xGowzrZCoIazClbDcckQNJ7LJowDIZmyJGXEs6n+c+kZ1ExqD5KCEECtoGm87h1Q1J68IMqMm/9l2nA87dni6uWD+Lltcym96MPO15SzJH+KzyD9a6zVnibGb6DYezwNyK/gF5U/MCCaJnRc+MPFqwH7njpquSekVeaNFRgTaesJ7uvRfbO+DfZSV4ea3XV5OE3jPmlOLEPqqhzLpeLVGmJsCQ==",
+                "Signature": "SrKNPBCFky03M/Lssemxkt2AG1lzZC5Aq2r2mHQN5v6enchTGxNqi87MEnCRE9N53U4AlFFdx2e7CnOa/cH+1oZ7li8hpcnqeCLYevWqgoS+EUW+3zjLT+mhn4OR+NDHSucqEaWX/dE1OIzIoMA/EQhXRkPPfeyI12WYwAUrKJ7za84LCNFG/8DCagfjEAebxVnyYR382xpvuuYpfUlSGr5Wvk9lk5OyfqKoepDIn/OjyYK88Rn4wi3iJdUX+dWgwULGMFfrDrrrYHCzbZwPi9t60vPWnOQdzIUE6pjCpH1Xy1ZA0/F9LvvkDk4JFKfzLtR8d8eK8fSPqVly9YCGVA==",
                 "SigningCertUrl": "https://sns.us-west-2.amazonaws.com/SimpleNotificationService-a86cb10b4e1f29c941702d737128f7b6.pem",
-                "UnsubscribeUrl": "https://sns.us-west-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-west-2:883394708467:local-demo-test-complaint:2a78546b-37d9-4709-b82b-ca87bdf42763",
+                "UnsubscribeUrl": "https://sns.us-west-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-west-2:883394708467:local-demo-test-complaint:822d95c2-1413-4d04-9a65-1b515c5fefc6",
                 "MessageAttributes": {}
             }
         }
