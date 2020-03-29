@@ -6,7 +6,17 @@ export const handler = async (event: AWSLambda.SNSEvent, context: AWSLambda.Cont
     let result: any = { success: true, updates, event };
 
     for (const bounceEvent of event.Records) {
-        const messageId = (bounceEvent.Sns.Message as any)?.mail?.messageId;
+        let { Message } = bounceEvent.Sns;
+        let messageId;
+
+        if (typeof Message === 'string') {
+            console.log('converting Message from string to object ', Message);
+            Message = JSON.parse(Message);
+        }
+
+        messageId = (Message as any)?.mail?.messageId;
+
+        console.log('messageId ', messageId);
 
         if (messageId) {
             const dynamodb = new DynamoDB.DocumentClient();
