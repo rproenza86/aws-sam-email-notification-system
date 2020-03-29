@@ -1,7 +1,7 @@
-export const handler = async (event: any = {}): Promise<any> => {
-  // Log the event argument for debugging and for use in local development.
-  const response = JSON.stringify(event, undefined, 2);
-  console.log(response);
+// external dependencies
+import { deadLetterProcessor } from '@rproenza/deadletterprocessor';
 
-  return response;
-}
+export const handler = async (event: AWSLambda.SNSEvent, context: AWSLambda.Context) => {
+    const result = await deadLetterProcessor(event);
+    return result;
+};
