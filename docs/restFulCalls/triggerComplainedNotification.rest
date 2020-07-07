@@ -1,8 +1,8 @@
-POST https://kgdg3a4p0m.execute-api.us-west-2.amazonaws.com/test/keys/triggerExpiration
+POST https://ed5xmbukcj.execute-api.us-west-2.amazonaws.com/test/keys/triggerExpiration
 Content-Type: application/json
 
 {
-    "message": "This will trigger an email complaint event!",
+    "message": "This will trigger an email complaint event Tue Jul 7!",
     "simulateBounceToggle": false,
     "simulateComplaintToggle": true
 }

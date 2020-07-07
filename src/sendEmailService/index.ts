@@ -6,7 +6,7 @@ import { IEmailInfo } from '../notificationsService/types';
 import { sendEmail } from './emailSender';
 
 export const handler = async (emailInfo: IEmailInfo) => {
-    let result: any = { success: true, why: 'Error sending email' };
+    let result: any = { success: false, why: 'Error sending email' };
 
     const emailSentResult: PromiseResult<SES.SendEmailResponse, AWSError> = await sendEmail(
         emailInfo?.content?.message,

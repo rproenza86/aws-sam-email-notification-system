@@ -1,4 +1,4 @@
-POST https://kgdg3a4p0m.execute-api.us-west-2.amazonaws.com/test/keys/triggerExpiration
+POST https://ed5xmbukcj.execute-api.us-west-2.amazonaws.com/test/keys/triggerExpiration
 Content-Type: application/json
 
 {
